@@ -25,7 +25,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route, Link, useHistory } from "react-router-native";
 import moment from 'moment';
 import {
   LineChart,
@@ -64,10 +64,13 @@ const MoodHistory = ({moods}) => <View style={styles.moodHistory}>
   {moods.length > 0 ? <MoodChart moods={moods.slice(moods.length - 7)} /> : <></>}
 </View>
 
-const TrackMood = ({ onPress }) => <View style={styles.trackMood}>
-  <Text style={styles.sectionTitle}>How're you feeling today?</Text>
-  <View style={styles.options}>{[1,2,3,4,5,6,7].map(i => <Button style={styles.optionButton} key={i} title={`${i}`} onPress={() => onPress(i)}/>)}</View>
-</View>
+const TrackMood = ({ onPress }) => {
+  let history = useHistory();
+  return <View style={styles.trackMood}>
+    <Text style={styles.sectionTitle}>How're you feeling today?</Text>
+    <View style={styles.options}>{[1,2,3,4,5,6,7].map(i => <Button style={styles.optionButton} key={i} title={`${i}`} onPress={() => onPress(i, history)}/>)}</View>
+  </View>
+}
 
 const Nav = () => <View style={styles.nav}>
   <Link style={styles.navButton} to="/"><Text>Track</Text></Link>
@@ -153,7 +156,7 @@ class App extends React.Component {
     this.setState({moods})
   }
 
-  async postMood(moodStatus) {
+  async postMood(moodStatus, history) {
     const newMood = await fetch('http://localhost:3000/moods/', {
       method: "POST",
       headers: {
@@ -167,6 +170,7 @@ class App extends React.Component {
       })
     }).then(res => res.json())
     this.setState({ moods: [...this.state.moods, newMood]})
+    history.push('/history')
   }
 
   render() {
