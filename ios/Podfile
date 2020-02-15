@@ -36,6 +36,8 @@ target 'sevenfrontend' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'sevenfrontendTests' do
     inherit! :search_paths
     # Pods for testing

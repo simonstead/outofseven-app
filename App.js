@@ -14,8 +14,9 @@ import {
   View,
   Text,
   StatusBar,
-  Button
 } from 'react-native';
+
+import { Button } from 'react-native-elements';
 
 import {
   Header,
@@ -68,14 +69,17 @@ const TrackMood = ({ onPress }) => {
   let history = useHistory();
   return <View style={styles.trackMood}>
     <Text style={styles.sectionTitle}>How're you feeling today?</Text>
-    <View style={styles.options}>{[1,2,3,4,5,6,7].map(i => <Button style={styles.optionButton} key={i} title={`${i}`} onPress={() => onPress(i, history)}/>)}</View>
+    <View style={styles.options}>{[1,2,3,4,5,6,7].map(i => <Button key={i} title={`${i}`} onPress={() => onPress(i, history)}/>)}</View>
   </View>
 }
 
-const Nav = () => <View style={styles.nav}>
-  <Link style={styles.navButton} to="/"><Text>Track</Text></Link>
-  <Link style={styles.navButton} to="/history"><Text>History</Text></Link>
-</View>
+const Nav = () => {
+  let history = useHistory();
+  return <View style={styles.nav}>
+    <Button onPress={() => history.push('/')} title="track"/>
+    <Button onPress={() => history.push('/history')} title="history"/>
+  </View>
+}
 
 const AppComponent = ({ moods, onPress }) => {
   return (
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: "#b5dccd",
   },
   optionButton: {
     color: '#000000'
@@ -110,11 +113,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    margin: '5%',
-    paddingTop: '5%',
+    width: '100%',
     position: 'absolute',
     bottom: 0,
-    zIndex: 1,
     backgroundColor: Colors.white,
     paddingBottom: '10%'
   },
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    marginBottom: '5%',
+    marginBottom: '20%',
     color: Colors.black,
   },
   scrollView: {
