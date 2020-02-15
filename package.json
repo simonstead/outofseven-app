@@ -10,8 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-chart-kit": "^4.5.0",
+    "react-native-svg": "^11.0.1",
+    "react-router-native": "^5.1.2",
     "redux": "^4.0.5",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0"
